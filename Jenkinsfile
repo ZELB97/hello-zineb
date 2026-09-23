@@ -16,11 +16,14 @@ pipeline {
             steps {
                 sh "cd hello/ && java bvs"
             }
+    
         }
-        stage('Affichage') { 
-            steps {
-                sh "echo 'Hello BVS'"
-            }
+    stage('Hello'){
+        steps {
+            sh "echo Hello zineb !"
         }
     }
+        
+    }
+    
 }
