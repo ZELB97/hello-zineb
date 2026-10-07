@@ -1,29 +1,35 @@
 pipeline {
-    agent any 
+    agent any
+
     stages {
-        stage('clone') { 
+        stage('build') {
             steps {
-                sh "rm -rf *"
-                sh "git clone https://github.com/bigvaluesys/hello.git"
+                sh 'javac --release 21 bvs.java'
             }
         }
-        stage('build') { 
+
+        stage('run') {
             steps {
-                sh "cd hello/ && javac --release 21 bvs.java"
+                sh 'java bvs'
             }
         }
-        stage('run') { 
+
+        stage('Hello') {
             steps {
-                sh "cd hello/ && java bvs"
+                sh 'echo "Hello Zineb !"'
             }
-    
         }
-    stage('Hello'){
-        steps {
-            sh "echo Hello zineb !"
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def scannerHome = tool 'SonarScanner'
+
+                    withSonarQubeEnv('SonarQube') {
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.java.binaries=."
+                    }
+                }
+            }
         }
     }
-        
-    }
-    
 }
