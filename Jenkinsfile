@@ -26,7 +26,7 @@ pipeline {
                     def scannerHome = tool 'SonarScanner'
 
                     withSonarQubeEnv('SonarQube') {
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.java.binaries=."
+                        sh "${scannerHome}/bin/sonar-scanner "
                     }
                 }
             }
